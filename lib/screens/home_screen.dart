@@ -13,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 var isPermissionGranted=false;
  PermissionState permission=PermissionState.notDetermined;
+ List<AssetEntity> assets = [];
   final  mediaService = MediaService();
   @override
   void initState() {
@@ -20,15 +21,23 @@ var isPermissionGranted=false;
    _checkPermission();
    
   }
+
   Future<void> _checkPermission() async {
   final permission = await mediaService.requestPermission();
   
   setState(() {
     if (permission.isAuth || permission.hasAccess) {
       isPermissionGranted = true;
+      _loadAssets();
     } else {
       isPermissionGranted = false;
     }
+  });
+}
+Future<void> _loadAssets() async {
+  final loadedAssets = await mediaService.loadAssets();
+  setState(() {
+    assets = loadedAssets;
   });
 }
 
@@ -38,7 +47,7 @@ var isPermissionGranted=false;
   Widget build(BuildContext context) {
       Widget bodyContent;
   if (isPermissionGranted) {
-    bodyContent = const MediaGrid();
+    bodyContent =  MediaGrid(assets: assets);
   } else {
     bodyContent = Center(
         child: Column(

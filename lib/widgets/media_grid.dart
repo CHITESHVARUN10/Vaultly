@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
+import 'package:photo_manager/photo_manager.dart';
+
 
 class MediaGrid extends StatelessWidget {
-   const MediaGrid({super.key});
-
+   const MediaGrid({super.key,required this.assets});
+final List<AssetEntity> assets;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -12,9 +15,13 @@ class MediaGrid extends StatelessWidget {
         crossAxisSpacing: 10.0, // Space between columns
         childAspectRatio: 1.0, // Width-to-height ratio of each tile
       ),
-      itemCount: 20,
+      itemCount: assets.length,
       itemBuilder: (context, index) {
-        return Card(child: Center(child: Text('Item $index')));
+        return  AssetEntityImage(
+          assets[index],
+          isOriginal: false,
+          thumbnailSize: const ThumbnailSize.square(200),
+        );
       },
     );
   }
