@@ -1,5 +1,5 @@
 import 'package:photo_manager/photo_manager.dart';
-import 'package:flutter/material.dart';
+
 class MediaService {
 
   Future<PermissionState> requestPermission() async {

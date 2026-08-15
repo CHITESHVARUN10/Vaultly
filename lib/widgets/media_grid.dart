@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
+
 import 'package:photo_manager/photo_manager.dart';
 
+import '../models/media_item.dart';
 
 class MediaGrid extends StatelessWidget {
    const MediaGrid({super.key,required this.assets});
@@ -17,10 +18,17 @@ final List<AssetEntity> assets;
       ),
       itemCount: assets.length,
       itemBuilder: (context, index) {
-        return  AssetEntityImage(
-          assets[index],
-          isOriginal: false,
-          thumbnailSize: const ThumbnailSize.square(200),
+        return  MediaItem(
+          asset: assets[index],
+          isSelected: false,
+          onTap: () {
+            print("tapped $index");
+            
+          },
+          onLongPress: () {
+            print("long pressed $index");
+            
+          },
         );
       },
     );
